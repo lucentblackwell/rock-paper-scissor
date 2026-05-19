@@ -37,14 +37,14 @@ function playRound(computerChoice, humanChoice) {
     (humanChoice === "paper" && computerChoice === "rock")
   ) {
     humanScore++;
-    return `You lose! ${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}.`;
+    return `Congrats, you win! ${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.`;
   } else if (
     (computerChoice === "rock" && humanChoice === "scissor") ||
     (computerChoice === "scissor" && humanChoice === "paper") ||
     (computerChoice === "paper" && humanChoice === "rock")
   ) {
     computerScore++;
-    return `You won!! ${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.`;
+    return `Sorry, but you lose! ${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}.`;
   } else {
     return "Enter a valid input as instructed.";
   }
@@ -58,6 +58,7 @@ function playGame() {
 
     let roundResult = playRound(computerChoice, humanChoice);
     alert(roundResult);
+    alert(`You: ${humanScore}\nComputer: ${computerScore}`)
   }
 
   if (computerScore > humanScore) {
