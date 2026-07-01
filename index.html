@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
+
   <head>
-    <title>A Console Rock Paper Scissor Game</title>
-    <meta charset="utf-8">
-    <script src="script.js"></script>
+    <title>Rock Paper Scissor</title>
+    <meta charset='utf-8'>
+    <script src='script.js' defer></script>
   </head>
+
   <body>
+    <h1>Rock Paper Scissor</h1>
+
+    <div id='setup'>
+      <p>To play a 5 round game press start.</p>
+
+      <button id='start'>Start</button>
+    </div>
+
+    <div id='game-screen' hidden>
+      <p>Choose your move:</p>
+
+      <span>
+        <button onclick="play('Rock')">Rock</button>
+        <button onclick="play('Paper')">Paper</button>
+        <button onclick="play('Scissor')">Scissor</button>
+      </span>
+    </div>
+
+    <div id="round-result" hidden>
+      <hr>
+      <p id='round-count'></p>
+      <h2>Result</h2>
+      <p id="result"></p>
+      <hr>
+      <p>Once round count hit 5 press any button once more for final score.</p>
+    </div>
+
+    <div id="final-result" hidden>
+      <hr>
+      <h2>Final Score</h2>
+      <p id="final-msg"></p>
+      <p id="player-score"></p>
+      <p id="computer-score"></p>
+      <hr>
+    </div>
+    
   </body>
 </html>

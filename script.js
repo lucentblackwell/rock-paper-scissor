@@ -1,75 +1,68 @@
+const choices = ['Rock', 'Paper', 'Scissor'];
+
 function getComputerChoice() {
-  let rock, paper, scissor;
+  return choices[Math.floor(Math.random() * 3)];
+}
 
-  rock = Math.random();
-  paper = Math.random();
-  scissor = Math.random();
-
-  variableWithLargestNumber = Math.max(rock, paper, scissor);
-
-  if (rock === variableWithLargestNumber) {
-    return "rock";
-  } else if (paper === variableWithLargestNumber) {
-    return "paper";
+function playRound(computerChoice, playerChoice) {
+  if (computerChoice === playerChoice) {
+    return "tie";
+  } else if (
+    (playerChoice === 'Rock'    && computerChoice === 'Scissor') ||
+    (playerChoice === 'Scissor' && computerChoice === 'Paper') ||
+    (playerChoice === 'Paper'   && computerChoice === 'Rock')
+  ) {
+    return 'win';
   } else {
-    return "scissor";
+    return 'lose';
   }
 }
 
-function getHumanChoice() {
-  let humanChoice;
-
-  humanChoice = prompt("Rock-Paper-Scissor \nWhat do you choose? (rock, paper, or scissor) \nType the full name of your choice. (e.g. type 'rock', not 'r' or anything else.) ");
-  return humanChoice;
-}
-
-let humanScore = 0;
+let playerScore = 0;
 let computerScore = 0;
+let roundCount = 0;
+const totalRound = 5;
 
-function playRound(computerChoice, humanChoice) {
-  humanChoice = humanChoice.toLowerCase();
+document.getElementById('start').addEventListener('click', () => {
+  document.getElementById('setup').hidden = true;
+  document.getElementById('game-screen').hidden = false;
+});
 
-  if (computerChoice === humanChoice) {
-    return "It's a tie."
-  } else if (
-    (humanChoice === "rock" && computerChoice === "scissor") ||
-    (humanChoice === "scissor" && computerChoice === "paper") ||
-    (humanChoice === "paper" && computerChoice === "rock")
-  ) {
-    humanScore++;
-    return `Congrats, you win! ${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.`;
-  } else if (
-    (computerChoice === "rock" && humanChoice === "scissor") ||
-    (computerChoice === "scissor" && humanChoice === "paper") ||
-    (computerChoice === "paper" && humanChoice === "rock")
-  ) {
-    computerScore++;
-    return `Sorry, but you lose! ${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}.`;
+function play(playerChoice) {
+  if (roundCount < totalRound) {
+    roundCount++;
+    const computerChoice = getComputerChoice();
+    const result = playRound(computerChoice, playerChoice);
+
+    if (result == 'tie') {
+      document.getElementById('result').textContent = "This round is tie!";
+    } else if (result == 'win') {
+      playerScore++;
+      document.getElementById('result').textContent = "You win!";
+    } else {
+      computerScore++;
+      document.getElementById('result').textContent = "You lose!";
+    };
+    document.getElementById('round-count').textContent = 'Round: ' + roundCount;
+    document.getElementById('round-result').hidden = false;
   } else {
-    return "Enter a valid input as instructed.";
+    showFinalResult();
   }
+};
 
-}
+function showFinalResult() {
+  document.getElementById("round-result").hidden = true;
 
-function playGame() {
-  for (let i = 0; i < 5; i++) {
-    let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice();
-
-    let roundResult = playRound(computerChoice, humanChoice);
-    alert(roundResult);
-    alert(`You: ${humanScore}\nComputer: ${computerScore}`)
-  }
-
-  if (computerScore > humanScore) {
-    return `Sorry, but your computer wins this game. \nComputer's Score: ${computerScore} \nYour Score: ${humanScore}`;
-  } else if (computerScore === humanScore) {
-    return `The game is a draw.\nComputer's Score: ${computerScore} \nYour Score: ${humanScore}`
+  if (playerScore > computerScore) {
+    document.getElementById("final-msg").textContent = "You are the Final Winner!";
+  } else if (playerScore < computerScore) {
+    document.getElementById("final-msg").textContent = "Computer wins this game!";
   } else {
-    return `Congrats! You won the game. \nComputer's Score: ${computerScore} \nYour Score: ${humanScore}`;
+    document.getElementById("final-msg").textContent = "It's a draw.";
   }
-}
 
-aGame = playGame();
-alert(aGame);
-console.log(aGame);
+  document.getElementById("player-score").textContent = `Your Score: ${playerScore}`;
+  document.getElementById("computer-score").textContent = `Computer Score: ${computerScore}`;
+
+  document.getElementById("final-result").hidden = false;
+};
